@@ -1,0 +1,53 @@
+{
+  "name": "staywise-lms",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "db:setup": "prisma db push && tsx prisma/seed.ts",
+    "db:seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate",
+    "format:check": "prettier --check src tests prisma/seed.ts *.md *.json *.ts *.mts *.mjs"
+  },
+  "dependencies": {
+    "@prisma/client": "6.12.0",
+    "@radix-ui/react-slot": "1.2.3",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "date-fns": "4.1.0",
+    "lucide-react": "0.468.0",
+    "next": "15.5.27",
+    "openai": "6.9.1",
+    "prisma": "6.12.0",
+    "react": "19.1.6",
+    "react-dom": "19.1.6",
+    "tailwind-merge": "3.3.1",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "@tailwindcss/postcss": "4.1.17",
+    "@types/node": "22.19.1",
+    "@types/react": "19.1.17",
+    "@types/react-dom": "19.1.11",
+    "eslint": "9.39.1",
+    "prettier": "3.6.2",
+    "tailwindcss": "4.1.17",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
+    "vitest": "4.1.11",
+    "@typescript-eslint/parser": "8.71.2",
+    "@typescript-eslint/eslint-plugin": "8.71.2",
+    "eslint-plugin-react-hooks": "7.1.1"
+  },
+  "overrides": {
+    "postcss": "8.5.30",
+    "sharp": "0.35.5"
+  }
+}

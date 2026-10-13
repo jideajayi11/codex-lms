@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "sqlite"
+  url = env("DATABASE_URL")
+}
+model DemoUser {
+  id String @id
+  name String
+  interests String
+  plans LearningPlan[]
+}
+model Resource {
+  id String @id
+  title String
+  topic String
+  sector String
+  level String
+  description String
+  outcomes String
+  source String
+  estimatedMinutes Int
+  lessons Lesson[]
+  reviews Review[]
+}
+model Lesson {
+  id String @id
+  resourceId String
+  resource Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  order Int
+  title String
+  text String
+  estimatedMinutes Int
+  milestones Milestone[]
+}
+model Review {
+  id String @id @default(cuid())
+  resourceId String
+  resource Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  author String
+  rating Int
+  text String
+  sample Boolean @default(false)
+  @@unique([resourceId, author])
+}
+model LearningPlan {
+  id String @id @default(cuid())
+  userId String
+  user DemoUser @relation(fields: [userId], references: [id])
+  title String
+  startDate String
+  duration Int
+  finishDate String
+  createdAt DateTime @default(now())
+  milestones Milestone[]
+  reminders Reminder[]
+}
+model Milestone {
+  id String @id @default(cuid())
+  planId String
+  plan LearningPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  lessonId String
+  lesson Lesson @relation(fields: [lessonId], references: [id])
+  order Int
+  dueDate String
+  estimatedMinutes Int
+  completedAt String?
+}
+model Reminder {
+  id String @id @default(cuid())
+  planId String
+  plan LearningPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  effectiveDate String
+  message String
+  dismissed Boolean @default(false)
+  @@unique([planId, effectiveDate])
+}
+model AIResult {
+  id String @id @default(cuid())
+  task String
+  inputHash String
+  result String
+  provenance String
+  @@unique([task, inputHash])
+}
+model DemoState {
+  id String @id
+  dateOffset Int @default(0)
+  forcedFallback Boolean @default(false)
+}
